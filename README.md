@@ -1,4 +1,4 @@
-# flutter_coincydence
+# cocktail_book
 
 A new Flutter project.
 
