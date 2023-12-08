@@ -1,17 +1,18 @@
+import 'package:cocktail_book/pages/drink_complete.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '/models/api.dart';
 import '/models/drinks.dart';
 
-class DrinkList extends StatefulWidget {
-  const DrinkList({super.key});
+class DrinkListPage extends StatefulWidget {
+  const DrinkListPage({super.key});
 
   @override
-  State<DrinkList> createState() => _DrinkListState();
+  State<DrinkListPage> createState() => _DrinkListPageState();
 }
 
-class _DrinkListState extends State<DrinkList> {
+class _DrinkListPageState extends State<DrinkListPage> {
   final List<String> ingredients = [
     'Dry_Vermouth',
     'Gin',
@@ -49,8 +50,8 @@ class _DrinkListState extends State<DrinkList> {
                 });
               },
               options: ingredients
-                  .map((e) =>
-                      ValueItem(label: e.split('_').join(' '), value: e))
+                  .map(
+                      (e) => ValueItem(label: e.split('_').join(' '), value: e))
                   .toList(),
               selectionType: SelectionType.multi,
               chipConfig: const ChipConfig(wrapType: WrapType.wrap),
@@ -61,7 +62,6 @@ class _DrinkListState extends State<DrinkList> {
             ),
           ),
         ),
-        
         Expanded(
           child: FutureBuilder(
             future: drinkList,
@@ -70,30 +70,33 @@ class _DrinkListState extends State<DrinkList> {
                 return ListView.builder(
                   itemCount: snapshot.data!.drinks.length,
                   itemBuilder: (context, index) {
-                    return Padding(
+                    return Container(
                       padding: const EdgeInsets.symmetric(vertical: 3.0),
+                      color: index % 2 == 0
+                          ? Theme.of(context).colorScheme.primaryContainer
+                          : Theme.of(context).colorScheme.secondaryContainer,
                       child: Row(
                         children: [
                           Expanded(
-                            child: Card(
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
+                            child: ListTile(
+                              title: Text(snapshot.data!.drinks[index].drink),
+                              leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: ListTile(
-                                key: Key(snapshot.data!.drinks[index].id),
-                                title: Text(snapshot.data!.drinks[index].drink),
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.network(
-                                    '${snapshot.data!.drinks[index].drinkThumb}/preview',
-                                    cacheHeight: 100,
-                                    cacheWidth: 100,
-                                  ),
+                                child: Image.network(
+                                  '${snapshot.data!.drinks[index].drinkThumb}/preview',
+                                  cacheHeight: 100,
+                                  cacheWidth: 100,
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 20.0),
                               ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => DrinkCompletePage(
+                                        id: snapshot.data!.drinks[index].id,
+                                        name: snapshot.data!.drinks[index].drink)
+                                    ));
+                              },
                             ),
                           ),
                         ],

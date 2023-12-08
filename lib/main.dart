@@ -41,9 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
-      body: const Center(
-        child: DrinkList(),
-      ),
+      body: const DrinkListPage(),
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
     );
   }
