@@ -1,3 +1,4 @@
+import 'package:cocktail_book/pages/drink_complete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Coincydence',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            brightness: Brightness.dark, seedColor: Colors.blueGrey),
+            brightness: Brightness.light,
+            seedColor: const Color.fromRGBO(57, 21, 20, 1)),
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -36,13 +38,32 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cocktail Book'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-      ),
-      body: const DrinkListPage(),
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-    );
+        appBar: AppBar(
+          title: Text('COCKTAIL BOOK',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontSize: 30)),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
+        body: const DrinkListPage(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        persistentFooterAlignment: AlignmentDirectional.center,
+        persistentFooterButtons: [OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const DrinkCompletePage(id: 'random')),
+            );
+          },
+          child: Text('RANDOM DRINK',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontSize: 20)),
+        )]);
   }
 }

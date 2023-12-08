@@ -18,7 +18,13 @@ class _DrinkListPageState extends State<DrinkListPage> {
     'Gin',
     'Vodka',
     'Tequila',
-    'White_Rum'
+    'White_Rum',
+    'Triple_Sec',
+    'Grenadine',
+    'Sweet_and_sour',
+    'Club_soda',
+    'Cachaca',
+    'Lemon_Juice',
   ];
   List<String> selectedIngredients = [];
   late Future<Drinks> drinkList;
@@ -36,7 +42,7 @@ class _DrinkListPageState extends State<DrinkListPage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.primary,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: MultiSelectDropDown(
@@ -66,20 +72,26 @@ class _DrinkListPageState extends State<DrinkListPage> {
           child: FutureBuilder(
             future: drinkList,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              } else {
+                return ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
                   itemCount: snapshot.data!.drinks.length,
                   itemBuilder: (context, index) {
                     return Container(
                       padding: const EdgeInsets.symmetric(vertical: 3.0),
-                      color: index % 2 == 0
-                          ? Theme.of(context).colorScheme.primaryContainer
-                          : Theme.of(context).colorScheme.secondaryContainer,
                       child: Row(
                         children: [
                           Expanded(
                             child: ListTile(
-                              title: Text(snapshot.data!.drinks[index].drink),
+                              title: Text(snapshot.data!.drinks[index].drink.toUpperCase(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary)),
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Image.network(
@@ -93,9 +105,8 @@ class _DrinkListPageState extends State<DrinkListPage> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => DrinkCompletePage(
-                                        id: snapshot.data!.drinks[index].id,
-                                        name: snapshot.data!.drinks[index].drink)
-                                    ));
+                                          id: snapshot.data!.drinks[index].id,
+                                        )));
                               },
                             ),
                           ),
@@ -104,10 +115,7 @@ class _DrinkListPageState extends State<DrinkListPage> {
                     );
                   },
                 );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
               }
-              return const CircularProgressIndicator();
             },
           ),
         ),
