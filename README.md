@@ -1,16 +1,45 @@
-# cocktail_book
+# Cocktail Book
 
-A new Flutter project.
+Un semplice progetto Flutter che utilizza <https://www.thecocktaildb.com/api.php> come API in versione free (non completa).
+
+Il progetto è stato testato su Andorid 8, 11 e 14
+
+È stato realizzato utilizzando Flutter 3.16.2
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+**Step 1:**
 
-A few resources to get you started if this is your first Flutter project:
+Scarica o clona la repo utilizzando il seguente link:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```plain
+https://github.com/cartu94/flutter-coincydence.git
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Step 2:**
+
+Posizionati nella cartella del progetto ed esegui il seguente comando nella console per ottenere le dipendenze richieste:
+
+```bash
+flutter pub get
+```
+
+**Step 3:**
+
+Testa l'applicazione per mezzo del comando:
+
+```bash
+flutter run
+```
+
+## How to use
+
+Il progetto consiste in un libro di ricette di cocktail (alcolici e non).
+
+È possibile selezionare un cocktail dalla lista per vederne i dettagli.
+
+Si può filtrare la ricerca per mezzo di ingredienti anche multipli (l'API non è realizzata benissimo quindi non c'è a disposizione una lista di tutti gli ingredienti ma solo di alcuni inseriti a mano).\
+La funzione per filtrare selezionando più di un ingrediente ha necessitato un implementazione poiché era presente solo nel piano premium.
+
+È possibile visualizzare un cocktail random premendo il pulsante nella pagina principale.\
+La pagina con i dettagli presenta un pulsante di refresh se raggiunta tramite cocktail random.
